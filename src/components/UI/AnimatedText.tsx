@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 
-const texts = [
-  "Say Your Idea",
-  "Describe your vision",
-  "Share your dream",
-  "Tell me what you need",
-  "Let's create something",
-  "Build your website"
+const rotatingTexts = [
+  "I'll turn your vision into reality.",
+  "Describe it, I'll build it.",
+  "Let's create something amazing.",
+  "Your idea, my execution.",
+  "Together we'll build the future.",
+  "Just describe, I'll do the rest.",
+  "From concept to creation."
 ];
 
 export const AnimatedText = () => {
@@ -16,7 +17,7 @@ export const AnimatedText = () => {
   const [charIndex, setCharIndex] = useState(0);
 
   useEffect(() => {
-    const currentText = texts[currentTextIndex];
+    const currentText = rotatingTexts[currentTextIndex];
     
     let timeout: NodeJS.Timeout;
 
@@ -33,14 +34,14 @@ export const AnimatedText = () => {
         setCharIndex(prev => prev - 1);
       }, 30);
     } else if (!isDeleting && charIndex === currentText.length) {
-      // Pause at full text
+      // Pause at full text for 2 seconds
       timeout = setTimeout(() => {
         setIsDeleting(true);
-      }, 2000); // Show for 2 seconds
+      }, 2000);
     } else if (isDeleting && charIndex === 0) {
       // Move to next text
       setIsDeleting(false);
-      setCurrentTextIndex(prev => (prev + 1) % texts.length);
+      setCurrentTextIndex(prev => (prev + 1) % rotatingTexts.length);
     }
 
     return () => clearTimeout(timeout);
@@ -53,25 +54,32 @@ export const AnimatedText = () => {
       <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 rounded-full blur-3xl" />
       
       <div className="relative z-10 text-center">
-        {/* Main text container */}
-        <div className="mb-12">
-          <h1 className="text-5xl md:text-6xl font-light tracking-tight text-gray-100">
-            <span className="font-medium bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              {displayText}
-              <span className="inline-block w-[3px] h-12 bg-gradient-to-b from-blue-400 to-cyan-400 animate-pulse ml-1"></span>
+        {/* Static main text */}
+        <div className="mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-100">
+            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
+              Say Your Idea
             </span>
           </h1>
         </div>
 
+        {/* Animated rotating text */}
+        <div className="h-16 flex items-center justify-center">
+          <h2 className="text-xl md:text-2xl font-light text-gray-300 min-h-[2.5rem]">
+            {displayText}
+            <span className="inline-block w-[2px] h-6 bg-gradient-to-b from-blue-400 to-cyan-400 animate-pulse ml-1"></span>
+          </h2>
+        </div>
+
         {/* Current text indicator */}
         <div className="flex justify-center gap-1 mt-8">
-          {texts.map((_, index) => (
+          {rotatingTexts.map((_, index) => (
             <div
               key={index}
-              className={`w-1 h-1 rounded-full transition-all duration-300 ${
+              className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
                 index === currentTextIndex 
-                  ? 'w-4 bg-gradient-to-r from-blue-400 to-cyan-400' 
-                  : 'bg-gray-600'
+                  ? 'w-6 bg-gradient-to-r from-blue-400 to-cyan-400' 
+                  : 'bg-gray-700'
               }`}
             />
           ))}

@@ -1,22 +1,14 @@
-import { Menu, Settings } from 'lucide-react';
+import { Menu } from 'lucide-react';
 
 export const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-6 py-4">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between">
-          {/* Left side - Hamburger and Settings */}
-          <div className="flex items-center gap-2">
-            {/* Hamburger button */}
-            <button className="w-10 h-10 rounded-xl bg-gray-800/50 border border-gray-700/50 flex items-center justify-center hover:bg-gray-800 transition-colors group">
-              <Menu className="w-5 h-5 text-gray-400 group-hover:text-gray-300 transition-colors" />
-            </button>
-
-            {/* Settings button */}
-            <button className="w-10 h-10 rounded-xl bg-gray-800/50 border border-gray-700/50 flex items-center justify-center hover:bg-gray-800 transition-colors group">
-              <Settings className="w-5 h-5 text-gray-400 group-hover:text-gray-300 transition-colors" />
-            </button>
-          </div>
+          {/* Left side - Only Hamburger */}
+          <button className="w-10 h-10 rounded-xl bg-gray-800/50 border border-gray-700/50 flex items-center justify-center hover:bg-gray-800 transition-colors group">
+            <Menu className="w-5 h-5 text-gray-400 group-hover:text-gray-300 transition-colors" />
+          </button>
 
           {/* Right side - Profile */}
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 flex items-center justify-center">
