@@ -1,5 +1,5 @@
 import { KeyboardEvent, useState } from 'react';
-import { Send, Plus, Mic, ArrowUp } from 'lucide-react';
+import { Plus, Mic, ArrowUp } from 'lucide-react'; // Removed unused Send import
 
 interface InputAreaProps {
   value: string;

@@ -1,14 +1,12 @@
 import { useRef, useEffect } from 'react';
 import { Message } from '../../types';
 import { MessageBubble } from './MessageBubble';
-import { TypingIndicator } from './TypingIndicator';
 
 interface MessageListProps {
   messages: Message[];
-  isAiTyping: boolean;
 }
 
-export const MessageList = ({ messages, isAiTyping }: MessageListProps) => {
+export const MessageList = ({ messages }: MessageListProps) => {
   const endRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -19,10 +17,9 @@ export const MessageList = ({ messages, isAiTyping }: MessageListProps) => {
       }
     };
 
-    // Small delay to ensure DOM is updated
     const timeoutId = setTimeout(scrollToBottom, 100);
     return () => clearTimeout(timeoutId);
-  }, [messages, isAiTyping]);
+  }, [messages]);
 
   return (
     <div 
@@ -39,12 +36,9 @@ export const MessageList = ({ messages, isAiTyping }: MessageListProps) => {
             </div>
           </div>
         ) : (
-          <>
-            {messages.map((message) => (
-              <MessageBubble key={message.id} message={message} />
-            ))}
-            {isAiTyping && <TypingIndicator />}
-          </>
+          messages.map((message) => (
+            <MessageBubble key={message.id} message={message} />
+          ))
         )}
         <div ref={endRef} className="h-px" />
       </div>
