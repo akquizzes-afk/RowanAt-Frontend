@@ -5,33 +5,36 @@ import { AnimatedText } from './components/UI/AnimatedText';
 import { useChat } from './hooks/useChat';
 
 function App() {
-  const { chatState, sendMessage, updateInput, toggleAssistantMode } = useChat();
+  const { chatState, sendMessage, updateInput } = useChat();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-      {/* Background stars effect */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(50)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-[1px] h-[1px] bg-white rounded-full animate-pulse"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              opacity: Math.random() * 0.5 + 0.2,
-            }}
-          />
-        ))}
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950">
+      {/* Premium background texture */}
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-900/20 via-gray-950 to-gray-950"></div>
+      
+      {/* Subtle grid overlay */}
+      <div className="fixed inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px),
+                           linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
+          backgroundSize: '40px 40px',
+        }}
+      />
+      
+      {/* Floating gradient orbs - minimal */}
+      <div className="fixed top-1/4 left-1/4 w-[300px] h-[300px] bg-gradient-to-r from-blue-500/5 to-cyan-500/5 rounded-full blur-3xl animate-pulse-slow" />
+      <div className="fixed bottom-1/4 right-1/4 w-[300px] h-[300px] bg-gradient-to-r from-emerald-500/5 to-teal-500/5 rounded-full blur-3xl animate-pulse-slow delay-1000" />
 
       <Header />
 
-      <main className="pt-16 pb-32 min-h-screen">
+      <main className="relative z-10">
         {chatState.messages.length === 0 ? (
           <AnimatedText />
         ) : (
-          <MessageList messages={chatState.messages} />
+          <MessageList 
+            messages={chatState.messages} 
+            isAiTyping={chatState.isAiTyping} 
+          />
         )}
       </main>
 
@@ -40,8 +43,6 @@ function App() {
         onChange={updateInput}
         onSend={sendMessage}
         isLoading={chatState.isLoading}
-        isAssistantMode={chatState.isAssistantMode}
-        onToggleAssistantMode={toggleAssistantMode}
       />
     </div>
   );

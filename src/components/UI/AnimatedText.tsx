@@ -1,28 +1,57 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 
-export const AnimatedText: React.FC = () => {
+export const AnimatedText = () => {
+  const [displayText, setDisplayText] = useState('');
+  const [charIndex, setCharIndex] = useState(0);
+  const fullText = "Describe your vision. I'll build it.";
+
+  useEffect(() => {
+    if (charIndex < fullText.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText(prev => prev + fullText.charAt(charIndex));
+        setCharIndex(prev => prev + 1);
+      }, 50);
+      return () => clearTimeout(timeout);
+    }
+  }, [charIndex, fullText]);
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] px-6 text-center">
-      <div className="relative">
-        <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-full blur-xl" />
-        <div className="relative">
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-4">
-            Tell me your idea,
-          </h1>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
-            <span className="typewriter border-r-4 pr-1">let me handle the rest!</span>
-          </h2>
-        </div>
-      </div>
+    <div className="min-h-[70vh] flex flex-col items-center justify-center px-6 relative">
+      {/* Subtle gradient orbs */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 rounded-full blur-3xl" />
       
-      <div className="mt-8 text-slate-300 max-w-md">
-        <p className="text-lg mb-2">✨ Describe your dream website in simple words</p>
-        <p className="text-sm opacity-75">Our AI agents will plan, code, and deploy it automatically</p>
-      </div>
+      <div className="relative z-10 text-center">
+        {/* Logo/Icon */}
+        <div className="mb-8 flex justify-center">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 flex items-center justify-center shadow-2xl">
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-lg rotate-45"></div>
+          </div>
+        </div>
 
-      <div className="mt-12 animate-pulse">
-        <div className="w-8 h-8 border-t-2 border-indigo-500 rounded-full animate-spin mx-auto" />
-        <p className="mt-3 text-sm text-slate-400">Waiting for your brilliant idea...</p>
+        {/* Main text */}
+        <h1 className="text-4xl md:text-5xl font-light tracking-tight text-gray-100 mb-6">
+          <span className="font-medium">AI Website Builder</span>
+        </h1>
+        
+        <div className="h-12 mb-8">
+          <p className="text-xl md:text-2xl text-gray-300 font-light">
+            {displayText}
+            <span className="inline-block w-[2px] h-6 bg-gradient-to-b from-blue-400 to-cyan-400 animate-pulse ml-1"></span>
+          </p>
+        </div>
+
+        {/* Subtitle */}
+        <p className="text-gray-400 max-w-md mx-auto text-sm md:text-base leading-relaxed">
+          Simply describe what you need. I'll handle the design, code, and deployment automatically.
+        </p>
+
+        {/* Scroll indicator */}
+        <div className="mt-16 animate-bounce">
+          <div className="w-6 h-10 border-2 border-gray-600 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-gradient-to-b from-gray-400 to-transparent rounded-full mt-2"></div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,34 +1,52 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { Message } from '../../types';
 import { MessageBubble } from './MessageBubble';
+import { TypingIndicator } from './TypingIndicator';
 
 interface MessageListProps {
   messages: Message[];
+  isAiTyping: boolean;
 }
 
-export const MessageList: React.FC<MessageListProps> = ({ messages }) => {
+export const MessageList = ({ messages, isAiTyping }: MessageListProps) => {
   const endRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    const scrollToBottom = () => {
+      if (endRef.current) {
+        endRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+
+    // Small delay to ensure DOM is updated
+    const timeoutId = setTimeout(scrollToBottom, 100);
+    return () => clearTimeout(timeoutId);
+  }, [messages, isAiTyping]);
 
   return (
-    <div className="flex-1 overflow-y-auto px-4 py-20">
-      <div className="max-w-3xl mx-auto">
+    <div 
+      ref={containerRef}
+      className="flex-1 overflow-y-auto px-4 py-20 md:px-8 scroll-smooth"
+      style={{ scrollBehavior: 'smooth' }}
+    >
+      <div className="max-w-3xl mx-auto pb-8">
         {messages.length === 0 ? (
           <div className="text-center py-12">
-            <div className="text-slate-500 mb-4">No messages yet</div>
-            <div className="text-sm text-slate-600">
+            <div className="text-gray-500 mb-4 text-sm">Conversation will appear here</div>
+            <div className="text-xs text-gray-600">
               Start by describing your website idea below
             </div>
           </div>
         ) : (
-          messages.map((message) => (
-            <MessageBubble key={message.id} message={message} />
-          ))
+          <>
+            {messages.map((message) => (
+              <MessageBubble key={message.id} message={message} />
+            ))}
+            {isAiTyping && <TypingIndicator />}
+          </>
         )}
-        <div ref={endRef} />
+        <div ref={endRef} className="h-px" />
       </div>
     </div>
   );
