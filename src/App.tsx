@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 function App() {
   return (
     <div className="flex h-screen w-full items-center justify-center">
@@ -11,4 +9,5 @@ function App() {
 }
 
 export default App
+
 
