@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback } from 'react';
 import { ChatState, Message } from '../types';
 
 const simulateAIResponse = (userInput: string): string => {
@@ -18,8 +18,6 @@ export const useChat = () => {
     isLoading: false,
     isAiTyping: false,
   });
-
-  const typingTimeoutRef = useRef<NodeJS.Timeout>();
 
   const sendMessage = useCallback(async () => {
     if (!chatState.input.trim() || chatState.isLoading) return;
