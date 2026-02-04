@@ -1,4 +1,3 @@
-import React from 'react';
 import { Header } from './components/Layout/Header';
 import { MessageList } from './components/Chat/MessageList';
 import { InputArea } from './components/Chat/InputArea';

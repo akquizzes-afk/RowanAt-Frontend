@@ -15,9 +15,9 @@ export const useChat = () => {
     const userMessage: Message = {
       id: Date.now().toString(),
       content: chatState.input,
-      sender: 'user',
+      sender: 'user' as const,
       timestamp: new Date(),
-      status: 'sending',
+      status: 'sending' as const,
     };
 
     // Add user message immediately
@@ -33,19 +33,26 @@ export const useChat = () => {
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         content: `I received: "${chatState.input}". Let me analyze this and start building your website! 🚀`,
-        sender: 'gatekeeper',
+        sender: 'gatekeeper' as const,
         timestamp: new Date(),
+        // No status property for AI messages
       };
 
-      setChatState(prev => ({
-        ...prev,
-        messages: prev.messages.map(msg => 
+      setChatState(prev => {
+        // Update the user message status to 'sent'
+        const updatedMessages = prev.messages.map(msg => 
           msg.id === userMessage.id 
-            ? { ...msg, status: 'sent' }
+            ? { ...msg, status: 'sent' as const }
             : msg
-        ).concat(aiMessage),
-        isLoading: false,
-      }));
+        );
+        
+        // Add the AI message
+        return {
+          ...prev,
+          messages: [...updatedMessages, aiMessage],
+          isLoading: false,
+        };
+      });
     }, 1500);
   }, [chatState.input, chatState.isLoading]);
 
