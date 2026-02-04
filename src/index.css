@@ -24,11 +24,11 @@
 
   /* Custom scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-gray-900/50;
+    @apply bg-transparent;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -38,6 +38,11 @@
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-gray-600;
   }
+
+  /* Smooth textarea resize */
+  textarea {
+    transition: height 0.2s ease;
+  }
 }
 
 @layer utilities {
@@ -45,8 +50,9 @@
     animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
-  .scroll-smooth {
-    scroll-behavior: smooth;
+  .animate-gradient {
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
   }
 
   /* Glass effect */
@@ -58,11 +64,21 @@
   .text-gradient {
     @apply bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent;
   }
+
+  /* Custom pulse animation for cursor */
+  @keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .cursor-blink {
+    animation: cursor-blink 1s infinite;
+  }
 }
 
 /* Smooth transitions */
 * {
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -74,4 +90,23 @@
 .no-scrollbar {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+}
+
+/* Gradient animation */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Typewriter animation */
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
 }
