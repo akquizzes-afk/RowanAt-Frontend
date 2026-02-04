@@ -19,41 +19,16 @@ export default {
           200: '#e0e0ea',
           100: '#f0f0f5',
         },
-        blue: {
-          500: '#3b82f6',
-          400: '#60a5fa',
-        },
-        cyan: {
-          500: '#06b6d4',
-          400: '#22d3ee',
-        }
-      },
-      fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
       },
       animation: {
+        'slide-in-from-top-5': 'slideInFromTop 0.2s ease-out',
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'gradient': 'gradient 15s ease infinite',
-        'typewriter': 'typewriter 2s steps(40) 1s 1 normal both',
-        'cursor-blink': 'cursor-blink 1s infinite',
       },
       keyframes: {
-        gradient: {
-          '0%, 100%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-        },
-        typewriter: {
-          from: { width: '0' },
-          to: { width: '100%' },
-        },
-        'cursor-blink': {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0' },
+        slideInFromTop: {
+          '0%': { transform: 'translateY(-10px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
         }
-      },
-      backdropBlur: {
-        xs: '2px',
       }
     },
   },

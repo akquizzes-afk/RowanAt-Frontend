@@ -21,29 +21,44 @@ function App() {
         }}
       />
       
-      {/* Floating gradient orbs - minimal */}
+      {/* Floating gradient orbs */}
       <div className="fixed top-1/4 left-1/4 w-[300px] h-[300px] bg-gradient-to-r from-blue-500/5 to-cyan-500/5 rounded-full blur-3xl animate-pulse-slow" />
       <div className="fixed bottom-1/4 right-1/4 w-[300px] h-[300px] bg-gradient-to-r from-emerald-500/5 to-teal-500/5 rounded-full blur-3xl animate-pulse-slow delay-1000" />
 
       <Header />
 
-      <main className="relative z-10">
-        {chatState.messages.length === 0 ? (
-          <AnimatedText />
-        ) : (
-          <MessageList 
-            messages={chatState.messages} 
-            isAiTyping={chatState.isAiTyping} 
-          />
-        )}
+      <main className="relative z-10 min-h-screen flex flex-col">
+        {/* Desktop: Content is centered and input is below text */}
+        <div className="flex-1 flex flex-col justify-center">
+          {chatState.messages.length === 0 ? (
+            <div className="flex-1 flex flex-col justify-between md:justify-center">
+              <div className="flex-1 flex items-center justify-center">
+                <AnimatedText />
+              </div>
+              
+              {/* Input area positioned higher on desktop */}
+              <div className="md:flex md:items-center md:justify-center md:pb-20">
+                <InputArea
+                  value={chatState.input}
+                  onChange={updateInput}
+                  onSend={sendMessage}
+                  isLoading={chatState.isLoading}
+                />
+              </div>
+            </div>
+          ) : (
+            <>
+              <MessageList messages={chatState.messages} />
+              <InputArea
+                value={chatState.input}
+                onChange={updateInput}
+                onSend={sendMessage}
+                isLoading={chatState.isLoading}
+              />
+            </>
+          )}
+        </div>
       </main>
-
-      <InputArea
-        value={chatState.input}
-        onChange={updateInput}
-        onSend={sendMessage}
-        isLoading={chatState.isLoading}
-      />
     </div>
   );
 }

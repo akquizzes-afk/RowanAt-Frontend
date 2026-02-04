@@ -58,7 +58,7 @@ export const AnimatedText = () => {
         <div className="mb-4">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-100">
             <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
-              Say Your Idea
+              Just Say Your Idea!!
             </span>
           </h1>
         </div>
