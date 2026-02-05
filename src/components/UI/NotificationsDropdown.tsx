@@ -30,7 +30,7 @@ export const NotificationsDropdown = ({ isOpen, onClose }: NotificationsDropdown
 
   return (
     <>
-      {/* Backdrop - Different for mobile vs desktop */}
+      {/* Backdrop */}
       <div 
         className="
           fixed inset-0 z-40 
@@ -40,15 +40,27 @@ export const NotificationsDropdown = ({ isOpen, onClose }: NotificationsDropdown
         onClick={onClose} 
       />
       
-      {/* Dropdown Card */}
+      {/* Dropdown Card - FIXED POSITIONING */}
       <div
         ref={dropdownRef}
-        className={`
-          absolute z-50 
+        className="
+          /* Break out of parent container but still positioned relative to viewport */
+          fixed md:absolute 
+          z-50 
           animate-in slide-in-from-top-5 duration-200
-          top-16 left-4 right-4
-          md:top-14 md:left-auto md:right-4 md:w-80
-        `}
+          
+          /* Position relative to screen viewport, not parent */
+          /* Calculate position based on typical header height (64px = top-16) */
+          top-16
+          
+          /* On mobile: center horizontally with max width */
+          left-1/2 -translate-x-1/2
+          w-[calc(100vw-2rem)] max-w-sm
+          
+          /* On desktop: position relative to bell icon */
+          md:left-auto md:right-0 md:translate-x-0
+          md:top-14 md:w-80
+        "
       >
         <div className="
           bg-gray-900/95 backdrop-blur-xl 
@@ -108,7 +120,6 @@ export const NotificationsDropdown = ({ isOpen, onClose }: NotificationsDropdown
               <Sparkles className="w-7 h-7 md:w-8 md:h-8 text-gray-500" />
             </div>
             
-            {/* Title */}
             <h4 className="
               text-base md:text-lg 
               font-medium text-gray-200 
@@ -117,13 +128,13 @@ export const NotificationsDropdown = ({ isOpen, onClose }: NotificationsDropdown
               All Caught Up! 🎉
             </h4>
             
-            {/* Message */}
             <p className="
               text-xs md:text-sm 
               text-gray-400 mb-6 
               leading-relaxed px-4
             ">
-              No new notifications. Your dashboard is looking clean.
+              No new notifications.
+              Your dashboard is looking clean.
             </p>
 
             {/* Pro Tip Card */}
@@ -154,7 +165,7 @@ export const NotificationsDropdown = ({ isOpen, onClose }: NotificationsDropdown
                     text-gray-400 
                     leading-relaxed
                   ">
-                    You can use voice commands to build faster. 
+                    You can use voice commands to build faster.
                     Just tap the microphone icon below.
                   </p>
                 </div>
