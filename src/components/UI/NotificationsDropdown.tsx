@@ -1,6 +1,6 @@
 // src/components/UI/NotificationsDropdown.tsx
 import { useRef, useEffect } from 'react';
-import { Bell, X, Zap, Sparkles, Check } from 'lucide-react';
+import { Bell, X, Zap, Sparkles } from 'lucide-react';
 
 interface NotificationsDropdownProps {
   isOpen: boolean;
@@ -30,86 +30,154 @@ export const NotificationsDropdown = ({ isOpen, onClose }: NotificationsDropdown
 
   return (
     <>
-      <div className="fixed inset-0 z-40" onClick={onClose} />
+      {/* Backdrop - Different for mobile vs desktop */}
+      <div 
+        className="
+          fixed inset-0 z-40 
+          bg-black/20 backdrop-blur-sm 
+          md:bg-transparent md:backdrop-blur-none
+        " 
+        onClick={onClose} 
+      />
       
-      {/* Mobile Dropdown */}
+      {/* Dropdown Card */}
       <div
         ref={dropdownRef}
-        className="md:hidden absolute top-14 right-4 z-50 w-[calc(100vw-2rem)] max-w-sm animate-in slide-in-from-top-5 duration-200"
+        className={`
+          absolute z-50 
+          animate-in slide-in-from-top-5 duration-200
+          top-16 left-4 right-4
+          md:top-14 md:left-auto md:right-4 md:w-80
+        `}
       >
-        <div className="bg-gray-900/95 backdrop-blur-xl border border-gray-800 rounded-2xl shadow-2xl overflow-hidden">
-          <div className="p-3 border-b border-gray-800 flex items-center justify-between">
+        <div className="
+          bg-gray-900/95 backdrop-blur-xl 
+          border border-gray-800 rounded-2xl 
+          shadow-2xl overflow-hidden 
+          ring-1 ring-white/10
+        ">
+          
+          {/* Header */}
+          <div className="
+            p-4 border-b border-gray-800 
+            flex items-center justify-between 
+            bg-gray-900/50
+          ">
             <div className="flex items-center gap-2">
-              <Bell className="w-4 h-4 text-amber-400" />
-              <h3 className="font-medium text-gray-200 text-sm">Alerts</h3>
-            </div>
-            <button onClick={onClose} className="p-1 rounded-lg hover:bg-gray-800">
-              <X className="w-3 h-3 text-gray-500" />
-            </button>
-          </div>
-
-          <div className="p-6 text-center">
-            <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center">
-              <Check className="w-5 h-5 text-gray-600" />
-            </div>
-            <h4 className="text-sm font-medium text-gray-200 mb-1">All Clear</h4>
-            <p className="text-xs text-gray-400">No notifications</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Desktop Dropdown */}
-      <div
-        ref={dropdownRef}
-        className="hidden md:block absolute top-14 right-4 z-50 w-80 animate-in slide-in-from-top-5 duration-200"
-      >
-        <div className="bg-gray-900/95 backdrop-blur-xl border border-gray-800 rounded-2xl shadow-2xl overflow-hidden">
-          <div className="p-4 border-b border-gray-800 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Bell className="w-5 h-5 text-amber-400" />
-              <h3 className="font-medium text-gray-200">Notifications</h3>
-              <span className="text-xs bg-amber-500/20 text-amber-400 px-2 py-1 rounded-full">
-                0 new
-              </span>
-            </div>
-            <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-800">
-              <X className="w-4 h-4 text-gray-500" />
-            </button>
-          </div>
-
-          <div className="p-8 text-center">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 flex items-center justify-center">
-              <Sparkles className="w-8 h-8 text-gray-600" />
+              <div className="relative">
+                <Bell className="w-5 h-5 text-amber-400" />
+                <span className="
+                  absolute top-0 right-0 
+                  w-2 h-2 bg-amber-500 
+                  rounded-full animate-pulse
+                " />
+              </div>
+              <h3 className="font-medium text-gray-200">
+                Notifications
+              </h3>
             </div>
             
-            <h4 className="text-lg font-medium text-gray-200 mb-2">
+            <button 
+              onClick={onClose} 
+              className="
+                p-1.5 rounded-lg 
+                hover:bg-gray-800 
+                text-gray-400 hover:text-white 
+                transition-colors
+              "
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Body Content */}
+          <div className="
+            p-6 md:p-8 
+            text-center 
+            bg-gradient-to-b from-gray-900/50 to-transparent
+          ">
+            {/* Icon */}
+            <div className="
+              w-14 h-14 md:w-16 md:h-16 
+              mx-auto mb-4 rounded-full 
+              bg-gradient-to-br from-gray-800 to-gray-900 
+              border border-gray-700 
+              flex items-center justify-center 
+              shadow-inner
+            ">
+              <Sparkles className="w-7 h-7 md:w-8 md:h-8 text-gray-500" />
+            </div>
+            
+            {/* Title */}
+            <h4 className="
+              text-base md:text-lg 
+              font-medium text-gray-200 
+              mb-2
+            ">
               All Caught Up! 🎉
             </h4>
             
-            <p className="text-sm text-gray-400 mb-6 leading-relaxed">
-              No notifications at the moment. Everything is running smoothly.
+            {/* Message */}
+            <p className="
+              text-xs md:text-sm 
+              text-gray-400 mb-6 
+              leading-relaxed px-4
+            ">
+              No new notifications. Your dashboard is looking clean.
             </p>
 
-            <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 border border-gray-800 rounded-xl p-4">
+            {/* Pro Tip Card */}
+            <div className="
+              bg-gray-800/30 
+              border border-gray-700/50 
+              rounded-xl p-3 md:p-4 
+              text-left
+            ">
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-                <div className="text-left">
-                  <p className="text-sm font-medium text-gray-200 mb-1">Pro Tip</p>
-                  <p className="text-xs text-gray-400">
-                    Complete your first build to unlock achievements and earn bonus credits.
+                <div className="
+                  p-1.5 rounded-lg 
+                  bg-amber-500/10 
+                  shrink-0
+                ">
+                  <Zap className="w-4 h-4 text-amber-400" />
+                </div>
+                <div>
+                  <p className="
+                    text-xs md:text-sm 
+                    font-medium text-gray-200 
+                    mb-1
+                  ">
+                    Did you know?
+                  </p>
+                  <p className="
+                    text-[10px] md:text-xs 
+                    text-gray-400 
+                    leading-relaxed
+                  ">
+                    You can use voice commands to build faster. 
+                    Just tap the microphone icon below.
                   </p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="p-4 border-t border-gray-800 bg-gradient-to-r from-gray-900/50 to-gray-800/50">
-            <div className="flex items-center justify-between">
-              <span className="text-xs text-gray-500">Last checked: Just now</span>
-              <button className="text-xs text-cyan-400 hover:text-cyan-300 font-medium">
-                View All
-              </button>
-            </div>
+          {/* Footer */}
+          <div className="
+            p-3 border-t border-gray-800 
+            bg-gray-900/80 
+            flex items-center justify-between
+          ">
+            <span className="text-[10px] md:text-xs text-gray-500">
+              Updated just now
+            </span>
+            <button className="
+              text-[10px] md:text-xs 
+              text-blue-400 hover:text-blue-300 
+              font-medium transition-colors
+            ">
+              View History
+            </button>
           </div>
         </div>
       </div>
