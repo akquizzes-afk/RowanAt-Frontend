@@ -27,34 +27,55 @@ function App() {
 
       <Header />
 
-      <main className="relative z-10 min-h-screen flex flex-col">
-        {/* Desktop: Content is centered and input is below text */}
-        <div className="flex-1 flex flex-col justify-center">
+      <main className="relative z-10 min-h-screen flex flex-col pt-16">
+        {/* Mobile: Input at bottom, Desktop: Input centered below text */}
+        <div className="flex-1 flex flex-col">
           {chatState.messages.length === 0 ? (
-            <div className="flex-1 flex flex-col justify-between md:justify-center">
-              <div className="flex-1 flex items-center justify-center">
+            <div className="flex-1 flex flex-col justify-center">
+              {/* Animated Text Section */}
+              <div className="flex-1 flex items-center justify-center px-4">
                 <AnimatedText />
               </div>
               
-              {/* Input area positioned higher on desktop */}
-              <div className="md:flex md:items-center md:justify-center md:pb-20">
-                <InputArea
-                  value={chatState.input}
-                  onChange={updateInput}
-                  onSend={sendMessage}
-                  isLoading={chatState.isLoading}
-                />
+              {/* Input Area - Different positioning for mobile vs desktop */}
+              <div className={`
+                ${chatState.messages.length === 0 
+                  ? 'fixed bottom-0 left-0 right-0 z-40 p-4 md:relative md:p-0 md:mt-8 md:bottom-auto' 
+                  : 'fixed bottom-0 left-0 right-0 z-40 p-4'
+                }
+              `}>
+                <div className={`
+                  ${chatState.messages.length === 0 
+                    ? 'md:max-w-2xl md:mx-auto md:px-4' 
+                    : 'max-w-3xl mx-auto'
+                  }
+                `}>
+                  {chatState.messages.length === 0 && (
+                    <div className="md:hidden absolute bottom-full left-0 right-0 h-12 bg-gradient-to-t from-gray-950 to-transparent pointer-events-none" />
+                  )}
+                  <InputArea
+                    value={chatState.input}
+                    onChange={updateInput}
+                    onSend={sendMessage}
+                    isLoading={chatState.isLoading}
+                  />
+                </div>
               </div>
             </div>
           ) : (
             <>
               <MessageList messages={chatState.messages} />
-              <InputArea
-                value={chatState.input}
-                onChange={updateInput}
-                onSend={sendMessage}
-                isLoading={chatState.isLoading}
-              />
+              <div className="fixed bottom-0 left-0 right-0 z-40 p-4">
+                <div className="max-w-3xl mx-auto">
+                  <div className="absolute bottom-full left-0 right-0 h-12 bg-gradient-to-t from-gray-950 to-transparent pointer-events-none" />
+                  <InputArea
+                    value={chatState.input}
+                    onChange={updateInput}
+                    onSend={sendMessage}
+                    isLoading={chatState.isLoading}
+                  />
+                </div>
+              </div>
             </>
           )}
         </div>

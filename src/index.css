@@ -147,3 +147,28 @@
 .animate-move-bottom-top {
   animation: moveBottomTop 3s linear infinite;
 }
+
+/* Add to existing animations */
+@keyframes borderMove {
+  0% {
+    stroke-dashoffset: 0;
+    d: path('M5,5 Q5,5 5,5 L95,5 Q95,5 95,5 L95,95 Q95,95 95,95 L5,95 Q5,95 5,95 Z');
+  }
+  25% {
+    d: path('M5,5 Q5,5 95,5 L95,5 Q95,5 95,95 L95,95 Q95,95 5,95 L5,95 Q5,95 5,5 Z');
+  }
+  50% {
+    d: path('M5,5 Q5,5 95,95 L95,5 Q95,5 5,95 L95,95 Q95,95 5,5 L5,95 Q5,95 95,5 Z');
+  }
+  75% {
+    d: path('M5,5 Q5,95 95,5 L95,5 Q5,5 95,95 L95,95 Q95,5 5,95 L5,95 Q95,95 5,5 Z');
+  }
+  100% {
+    stroke-dashoffset: 100;
+    d: path('M5,5 Q5,5 5,5 L95,5 Q95,5 95,5 L95,95 Q95,95 95,95 L5,95 Q5,95 5,95 Z');
+  }
+}
+
+.animate-border-move {
+  animation: borderMove 3s linear infinite;
+}

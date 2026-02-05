@@ -24,10 +24,7 @@ export default {
         'slide-in-from-top-5': 'slideInFromTop 0.2s ease-out',
         'slide-in-from-right-5': 'slideInFromRight 0.2s ease-out',
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'move-left-right': 'moveLeftRight 3s linear infinite',
-        'move-right-left': 'moveRightLeft 3s linear infinite',
-        'move-top-bottom': 'moveTopBottom 3s linear infinite',
-        'move-bottom-top': 'moveBottomTop 3s linear infinite',
+        'border-move': 'borderMove 3s linear infinite',
       },
       keyframes: {
         slideInFromTop: {
@@ -38,21 +35,24 @@ export default {
           '0%': { transform: 'translateX(10px)', opacity: '0' },
           '100%': { transform: 'translateX(0)', opacity: '1' },
         },
-        moveLeftRight: {
-          '0%': { transform: 'translateX(-100%)' },
-          '100%': { transform: 'translateX(100%)' },
-        },
-        moveRightLeft: {
-          '0%': { transform: 'translateX(100%)' },
-          '100%': { transform: 'translateX(-100%)' },
-        },
-        moveTopBottom: {
-          '0%': { transform: 'translateY(-100%)' },
-          '100%': { transform: 'translateY(100%)' },
-        },
-        moveBottomTop: {
-          '0%': { transform: 'translateY(100%)' },
-          '100%': { transform: 'translateY(-100%)' },
+        borderMove: {
+          '0%': { 
+            strokeDashoffset: '0',
+            d: 'M5,5 Q5,5 5,5 L95,5 Q95,5 95,5 L95,95 Q95,95 95,95 L5,95 Q5,95 5,95 Z'
+          },
+          '25%': {
+            d: 'M5,5 Q5,5 95,5 L95,5 Q95,5 95,95 L95,95 Q95,95 5,95 L5,95 Q5,95 5,5 Z'
+          },
+          '50%': {
+            d: 'M5,5 Q5,5 95,95 L95,5 Q95,5 5,95 L95,95 Q95,95 5,5 L5,95 Q5,95 95,5 Z'
+          },
+          '75%': {
+            d: 'M5,5 Q5,95 95,5 L95,5 Q5,5 95,95 L95,95 Q95,5 5,95 L5,95 Q95,95 5,5 Z'
+          },
+          '100%': {
+            strokeDashoffset: '100',
+            d: 'M5,5 Q5,5 5,5 L95,5 Q95,5 95,5 L95,95 Q95,95 95,95 L5,95 Q5,95 5,95 Z'
+          },
         },
       }
     },
