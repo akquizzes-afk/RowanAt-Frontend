@@ -9,9 +9,10 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950">
-      {/* Background elements */}
+      {/* Premium background texture */}
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-900/20 via-gray-950 to-gray-950" />
       
+      {/* Subtle grid overlay */}
       <div className="fixed inset-0 opacity-[0.03]"
         style={{
           backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px),
@@ -20,6 +21,7 @@ function App() {
         }}
       />
       
+      {/* Floating gradient orbs */}
       <div className="fixed top-1/4 left-1/4 w-[300px] h-[300px] bg-gradient-to-r from-blue-500/5 to-cyan-500/5 rounded-full blur-3xl animate-pulse-slow" />
       <div className="fixed bottom-1/4 right-1/4 w-[300px] h-[300px] bg-gradient-to-r from-emerald-500/5 to-teal-500/5 rounded-full blur-3xl animate-pulse-slow delay-1000" />
 
@@ -27,16 +29,17 @@ function App() {
 
       <main className="relative z-10 min-h-screen flex flex-col">
         {chatState.messages.length === 0 ? (
-          // When no messages - Desktop: Input below text, Mobile: Input at bottom
-          <div className="flex-1 flex flex-col">
-            {/* Animated Text Section - Always centered */}
-            <div className="flex-1 flex items-center justify-center px-4">
+          
+          /* LAYOUT FIX START */
+          <div className="flex-1 flex flex-col items-center justify-center p-4 gap-8">
+            
+            {/* Animated Text Section - Removed flex-1 so it doesn't push input down */}
+            <div className="w-full flex items-center justify-center">
               <AnimatedText />
             </div>
             
-            {/* Input Area - Different positioning for mobile/desktop */}
-            {/* On desktop: fixed position below text */}
-            <div className="hidden md:block pb-20 px-4">
+            {/* Desktop Input - Now placed directly under text due to parent flex-col */}
+            <div className="hidden md:block w-full max-w-2xl">
               <InputArea
                 value={chatState.input}
                 onChange={updateInput}
@@ -45,7 +48,7 @@ function App() {
               />
             </div>
             
-            {/* On mobile: fixed at bottom */}
+            {/* Mobile Input - Remains fixed at bottom */}
             <div className="fixed bottom-0 left-0 right-0 z-40 p-4 md:hidden">
               <div className="absolute bottom-full left-0 right-0 h-12 bg-gradient-to-t from-gray-950 to-transparent" />
               <InputArea
@@ -56,6 +59,8 @@ function App() {
               />
             </div>
           </div>
+          /* LAYOUT FIX END */
+
         ) : (
           // When messages exist - Input always at bottom
           <>

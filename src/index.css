@@ -100,6 +100,20 @@
   animation: slideInFromTop 0.2s ease-out;
 }
 
+/* Spin Animation - For InputArea border */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin 4s linear infinite;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
 /* Input Border Animations - Used in InputArea.tsx */
 @keyframes moveHorizontal {
   0% { transform: translateX(-100%); }
@@ -119,45 +133,6 @@
 @keyframes moveVerticalReverse {
   0% { transform: translateY(100%); }
   100% { transform: translateY(-100%); }
-}
-
-.animate-move-horizontal {
-  animation: moveHorizontal 3s linear infinite;
-}
-
-.animate-move-horizontal-reverse {
-  animation: moveHorizontalReverse 3s linear infinite;
-}
-
-.animate-move-vertical {
-  animation: moveVertical 3s linear infinite;
-}
-
-.animate-move-vertical-delayed {
-  animation: moveVertical 3s linear infinite 1.5s;
-}
-
-.animate-move-vertical-reverse {
-  animation: moveVerticalReverse 3s linear infinite;
-}
-
-.animate-move-vertical-reverse-delayed {
-  animation: moveVerticalReverse 3s linear infinite 1.5s;
-}
-
-/* Gradient Border Pulse - For mobile input */
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-.border-gradient {
-  background: linear-gradient(90deg, #3b82f6, #06b6d4, #8b5cf6, #3b82f6);
-  background-size: 300% 300%;
-}
-
-.animate-border-pulse {
-  animation: gradientShift 3s ease infinite;
 }
 
 /* Cursor Blink - For typing indicator in AnimatedText.tsx */
