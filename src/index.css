@@ -2,8 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
+/* ===== Base Styles ===== */
 @layer base {
   :root {
     --background: 240 10% 3.9%;
@@ -16,27 +17,10 @@
 
   body {
     @apply bg-gray-950 text-gray-100 antialiased;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
-  }
-
-  /* Custom scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    @apply bg-transparent;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    @apply bg-gray-700 rounded-full;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-600;
   }
 
   /* Smooth textarea resize */
@@ -45,14 +29,10 @@
   }
 }
 
+/* ===== Custom Utilities ===== */
 @layer utilities {
   .animate-pulse-slow {
     animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  .animate-gradient {
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
   }
 
   /* Glass effect */
@@ -64,21 +44,25 @@
   .text-gradient {
     @apply bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent;
   }
-
-  /* Custom pulse animation for cursor */
-  @keyframes cursor-blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-
-  .cursor-blink {
-    animation: cursor-blink 1s infinite;
-  }
 }
 
-/* Smooth transitions */
-* {
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+/* ===== Component Styles ===== */
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-700 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-600;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -92,83 +76,106 @@
   scrollbar-width: none;  /* Firefox */
 }
 
-/* Gradient animation */
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+/* ===== Global Transitions ===== */
+* {
+  transition: background-color 0.2s ease, 
+              border-color 0.2s ease, 
+              transform 0.2s ease,
+              opacity 0.2s ease;
 }
 
-/* Typewriter animation */
+/* ===== Animations (Used in Components) ===== */
+
+/* Slide In Animations - Used in DropdownMenu.tsx */
+@keyframes slideInFromTop {
+  0% { transform: translateY(-10px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.animate-in {
+  animation-fill-mode: both;
+}
+
+.slide-in-from-top-5 {
+  animation: slideInFromTop 0.2s ease-out;
+}
+
+/* Input Border Animations - Used in InputArea.tsx */
+@keyframes moveHorizontal {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes moveHorizontalReverse {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes moveVertical {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes moveVerticalReverse {
+  0% { transform: translateY(100%); }
+  100% { transform: translateY(-100%); }
+}
+
+.animate-move-horizontal {
+  animation: moveHorizontal 3s linear infinite;
+}
+
+.animate-move-horizontal-reverse {
+  animation: moveHorizontalReverse 3s linear infinite;
+}
+
+.animate-move-vertical {
+  animation: moveVertical 3s linear infinite;
+}
+
+.animate-move-vertical-delayed {
+  animation: moveVertical 3s linear infinite 1.5s;
+}
+
+.animate-move-vertical-reverse {
+  animation: moveVerticalReverse 3s linear infinite;
+}
+
+.animate-move-vertical-reverse-delayed {
+  animation: moveVerticalReverse 3s linear infinite 1.5s;
+}
+
+/* Gradient Border Pulse - For mobile input */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.border-gradient {
+  background: linear-gradient(90deg, #3b82f6, #06b6d4, #8b5cf6, #3b82f6);
+  background-size: 300% 300%;
+}
+
+.animate-border-pulse {
+  animation: gradientShift 3s ease infinite;
+}
+
+/* Cursor Blink - For typing indicator in AnimatedText.tsx */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-cursor-blink {
+  animation: cursor-blink 1s infinite;
+}
+
+/* Typewriter - Used in AnimatedText.tsx */
 @keyframes typewriter {
   from { width: 0; }
   to { width: 100%; }
 }
 
-
-@keyframes moveLeftRight {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-@keyframes moveRightLeft {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
-}
-
-@keyframes moveTopBottom {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
-}
-
-@keyframes moveBottomTop {
-  0% { transform: translateY(100%); }
-  100% { transform: translateY(-100%); }
-}
-
-.animate-move-left-right {
-  animation: moveLeftRight 3s linear infinite;
-}
-
-.animate-move-right-left {
-  animation: moveRightLeft 3s linear infinite;
-}
-
-.animate-move-top-bottom {
-  animation: moveTopBottom 3s linear infinite;
-}
-
-.animate-move-bottom-top {
-  animation: moveBottomTop 3s linear infinite;
-}
-
-/* Add to existing animations */
-@keyframes borderMove {
-  0% {
-    stroke-dashoffset: 0;
-    d: path('M5,5 Q5,5 5,5 L95,5 Q95,5 95,5 L95,95 Q95,95 95,95 L5,95 Q5,95 5,95 Z');
-  }
-  25% {
-    d: path('M5,5 Q5,5 95,5 L95,5 Q95,5 95,95 L95,95 Q95,95 5,95 L5,95 Q5,95 5,5 Z');
-  }
-  50% {
-    d: path('M5,5 Q5,5 95,95 L95,5 Q95,5 5,95 L95,95 Q95,95 5,5 L5,95 Q5,95 95,5 Z');
-  }
-  75% {
-    d: path('M5,5 Q5,95 95,5 L95,5 Q5,5 95,95 L95,95 Q95,5 5,95 L5,95 Q95,95 5,5 Z');
-  }
-  100% {
-    stroke-dashoffset: 100;
-    d: path('M5,5 Q5,5 5,5 L95,5 Q95,5 95,5 L95,95 Q95,95 95,95 L5,95 Q5,95 5,95 Z');
-  }
-}
-
-.animate-border-move {
-  animation: borderMove 3s linear infinite;
+.animate-typewriter {
+  animation: typewriter 2s steps(40) 1s 1 normal both;
 }

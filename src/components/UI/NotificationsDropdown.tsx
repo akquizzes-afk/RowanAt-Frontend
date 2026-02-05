@@ -1,6 +1,6 @@
 // src/components/UI/NotificationsDropdown.tsx
 import { useRef, useEffect } from 'react';
-import { Bell, CheckCircle, X, Zap, Sparkles } from 'lucide-react';
+import { Bell, X, Zap, Sparkles, Check } from 'lucide-react';
 
 interface NotificationsDropdownProps {
   isOpen: boolean;
@@ -30,65 +30,83 @@ export const NotificationsDropdown = ({ isOpen, onClose }: NotificationsDropdown
 
   return (
     <>
-      {/* Backdrop */}
       <div className="fixed inset-0 z-40" onClick={onClose} />
       
-      {/* Notifications Card - Responsive */}
+      {/* Mobile Dropdown */}
       <div
         ref={dropdownRef}
-        className="absolute top-14 right-4 z-50 w-80 sm:w-96 md:w-80 animate-in slide-in-from-top-5 duration-200"
+        className="md:hidden absolute top-14 right-4 z-50 w-[calc(100vw-2rem)] max-w-sm animate-in slide-in-from-top-5 duration-200"
       >
         <div className="bg-gray-900/95 backdrop-blur-xl border border-gray-800 rounded-2xl shadow-2xl overflow-hidden">
-          {/* Header */}
-          <div className="p-3 sm:p-4 border-b border-gray-800 flex items-center justify-between">
+          <div className="p-3 border-b border-gray-800 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Bell className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
-              <h3 className="font-medium text-gray-200 text-sm sm:text-base">Notifications</h3>
-              <span className="text-xs bg-amber-500/20 text-amber-400 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full">
-                0 new
-              </span>
+              <Bell className="w-4 h-4 text-amber-400" />
+              <h3 className="font-medium text-gray-200 text-sm">Alerts</h3>
             </div>
-            <button
-              onClick={onClose}
-              className="p-1 sm:p-1.5 rounded-lg hover:bg-gray-800 transition-colors"
-            >
-              <X className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500" />
+            <button onClick={onClose} className="p-1 rounded-lg hover:bg-gray-800">
+              <X className="w-3 h-3 text-gray-500" />
             </button>
           </div>
 
-          {/* Empty State */}
-          <div className="p-4 sm:p-8 text-center">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-full bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 flex items-center justify-center">
-              <Sparkles className="w-5 h-5 sm:w-8 sm:h-8 text-gray-600" />
+          <div className="p-6 text-center">
+            <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center">
+              <Check className="w-5 h-5 text-gray-600" />
+            </div>
+            <h4 className="text-sm font-medium text-gray-200 mb-1">All Clear</h4>
+            <p className="text-xs text-gray-400">No notifications</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Dropdown */}
+      <div
+        ref={dropdownRef}
+        className="hidden md:block absolute top-14 right-4 z-50 w-80 animate-in slide-in-from-top-5 duration-200"
+      >
+        <div className="bg-gray-900/95 backdrop-blur-xl border border-gray-800 rounded-2xl shadow-2xl overflow-hidden">
+          <div className="p-4 border-b border-gray-800 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Bell className="w-5 h-5 text-amber-400" />
+              <h3 className="font-medium text-gray-200">Notifications</h3>
+              <span className="text-xs bg-amber-500/20 text-amber-400 px-2 py-1 rounded-full">
+                0 new
+              </span>
+            </div>
+            <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-800">
+              <X className="w-4 h-4 text-gray-500" />
+            </button>
+          </div>
+
+          <div className="p-8 text-center">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 flex items-center justify-center">
+              <Sparkles className="w-8 h-8 text-gray-600" />
             </div>
             
-            <h4 className="text-base sm:text-lg font-medium text-gray-200 mb-1 sm:mb-2">
+            <h4 className="text-lg font-medium text-gray-200 mb-2">
               All Caught Up! 🎉
             </h4>
             
-            <p className="text-xs sm:text-sm text-gray-400 mb-4 sm:mb-6 leading-relaxed">
+            <p className="text-sm text-gray-400 mb-6 leading-relaxed">
               No notifications at the moment. Everything is running smoothly.
             </p>
 
-            {/* Pro tip */}
-            <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 border border-gray-800 rounded-lg sm:rounded-xl p-3">
-              <div className="flex items-start gap-2 sm:gap-3">
-                <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+            <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 border border-gray-800 rounded-xl p-4">
+              <div className="flex items-start gap-3">
+                <Zap className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                 <div className="text-left">
-                  <p className="text-xs sm:text-sm font-medium text-gray-200 mb-1">Pro Tip</p>
+                  <p className="text-sm font-medium text-gray-200 mb-1">Pro Tip</p>
                   <p className="text-xs text-gray-400">
-                    Complete your first build to unlock achievements.
+                    Complete your first build to unlock achievements and earn bonus credits.
                   </p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Footer */}
-          <div className="p-3 sm:p-4 border-t border-gray-800 bg-gradient-to-r from-gray-900/50 to-gray-800/50">
+          <div className="p-4 border-t border-gray-800 bg-gradient-to-r from-gray-900/50 to-gray-800/50">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-gray-500">Just now</span>
-              <button className="text-xs text-cyan-400 hover:text-cyan-300 transition-colors font-medium">
+              <span className="text-xs text-gray-500">Last checked: Just now</span>
+              <button className="text-xs text-cyan-400 hover:text-cyan-300 font-medium">
                 View All
               </button>
             </div>
