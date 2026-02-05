@@ -1,9 +1,12 @@
+// src/components/Layout/Header.tsx
 import { useState } from 'react';
 import { Menu, Bell } from 'lucide-react';
 import { DropdownMenu } from '../UI/DropdownMenu';
+import { NotificationsDropdown } from '../UI/NotificationsDropdown';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-6 py-4">
@@ -12,7 +15,10 @@ export const Header = () => {
           {/* Left side - Hamburger */}
           <div className="relative">
             <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              onClick={() => {
+                setIsMenuOpen(!isMenuOpen);
+                if (isNotificationsOpen) setIsNotificationsOpen(false);
+              }}
               className="w-10 h-10 rounded-xl bg-gray-800/50 border border-gray-700/50 flex items-center justify-center hover:bg-gray-800 transition-colors group"
             >
               <Menu className="w-5 h-5 text-gray-400 group-hover:text-gray-300 transition-colors" />
@@ -25,13 +31,27 @@ export const Header = () => {
           {/* Right side - Notification + Profile */}
           <div className="flex items-center gap-3">
             {/* Notification Bell */}
-            <button className="relative w-10 h-10 rounded-xl bg-gray-800/50 border border-gray-700/50 flex items-center justify-center hover:bg-gray-800 transition-colors group">
-              <Bell className="w-5 h-5 text-gray-400 group-hover:text-gray-300 transition-colors" />
-              <div className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full animate-pulse" />
-            </button>
+            <div className="relative">
+              <button
+                onClick={() => {
+                  setIsNotificationsOpen(!isNotificationsOpen);
+                  if (isMenuOpen) setIsMenuOpen(false);
+                }}
+                className="relative w-10 h-10 rounded-xl bg-gray-800/50 border border-gray-700/50 flex items-center justify-center hover:bg-gray-800 transition-colors group"
+              >
+                <Bell className="w-5 h-5 text-gray-400 group-hover:text-gray-300 transition-colors" />
+                {/* Red dot for new notifications - currently none */}
+              </button>
+              
+              {/* Notifications Dropdown */}
+              <NotificationsDropdown 
+                isOpen={isNotificationsOpen} 
+                onClose={() => setIsNotificationsOpen(false)} 
+              />
+            </div>
 
             {/* Profile */}
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 flex items-center justify-center cursor-pointer hover:border-gray-600 transition-colors">
               <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-400/30 to-cyan-400/30 flex items-center justify-center">
                 <span className="text-xs font-medium text-gray-300">A</span>
               </div>
