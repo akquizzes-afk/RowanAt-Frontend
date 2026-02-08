@@ -1,3 +1,4 @@
+// src/components/UI/AnimatedText.tsx
 import { useEffect, useState } from 'react';
 
 const rotatingTexts = [
@@ -48,42 +49,24 @@ export const AnimatedText = () => {
   }, [charIndex, currentTextIndex, isDeleting]);
 
   return (
-    <div className="min-h-[70vh] flex flex-col items-center justify-center px-6 relative">
-      {/* Subtle gradient orbs */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 rounded-full blur-3xl" />
+    <div className="text-center">
+      <h2 className="text-2xl md:text-3xl font-light text-gray-300 min-h-[2.5rem]">
+        {displayText}
+        <span className="inline-block w-[2px] h-8 bg-gradient-to-b from-blue-400 to-cyan-400 animate-pulse ml-1"></span>
+      </h2>
       
-      <div className="relative z-10 text-center">
-        {/* Static main text */}
-        <div className="mb-4">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-100">
-            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
-              Just Say Your Idea!!
-            </span>
-          </h1>
-        </div>
-
-        {/* Animated rotating text */}
-        <div className="h-16 flex items-center justify-center">
-          <h2 className="text-xl md:text-2xl font-light text-gray-300 min-h-[2.5rem]">
-            {displayText}
-            <span className="inline-block w-[2px] h-6 bg-gradient-to-b from-blue-400 to-cyan-400 animate-pulse ml-1"></span>
-          </h2>
-        </div>
-
-        {/* Current text indicator */}
-        <div className="flex justify-center gap-1 mt-8">
-          {rotatingTexts.map((_, index) => (
-            <div
-              key={index}
-              className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                index === currentTextIndex 
-                  ? 'w-6 bg-gradient-to-r from-blue-400 to-cyan-400' 
-                  : 'bg-gray-700'
-              }`}
-            />
-          ))}
-        </div>
+      {/* Current text indicator */}
+      <div className="flex justify-center gap-1.5 mt-6">
+        {rotatingTexts.map((_, index) => (
+          <div
+            key={index}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              index === currentTextIndex 
+                ? 'w-6 bg-gradient-to-r from-blue-400 to-cyan-400' 
+                : 'bg-gray-700'
+            }`}
+          />
+        ))}
       </div>
     </div>
   );

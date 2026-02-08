@@ -4,27 +4,15 @@ import { Menu, Bell, User } from 'lucide-react';
 import { DropdownMenu } from '../UI/DropdownMenu';
 import { NotificationsDropdown } from '../UI/NotificationsDropdown';
 
-export const Header = () => {
+interface HeaderProps {
+  isLoggedIn: boolean;
+  onLogin?: () => void;
+  onLogout?: () => void;
+}
+
+export const Header = ({ isLoggedIn, onLogin, onLogout }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Default to not logged in
-
-  // Mock login/logout functions
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-    console.log('User logged in');
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setIsMenuOpen(false);
-    console.log('User logged out');
-  };
-
-  const handleSignUp = () => {
-    setIsLoggedIn(true);
-    console.log('User signed up');
-  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-4 py-3 sm:px-6 sm:py-4">
@@ -80,7 +68,7 @@ export const Header = () => {
 
                 {/* Profile Icon with logout functionality */}
                 <button
-                  onClick={handleLogout}
+                  onClick={onLogout}
                   className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 flex items-center justify-center hover:border-gray-600 transition-colors group"
                   title="Logout"
                 >
@@ -92,7 +80,7 @@ export const Header = () => {
               <>
                 {/* Login Button */}
                 <button
-                  onClick={handleLogin}
+                  onClick={onLogin}
                   className="px-3 py-2 rounded-xl bg-gray-800/50 border border-gray-700/50 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-colors whitespace-nowrap"
                 >
                   Login
@@ -100,7 +88,7 @@ export const Header = () => {
 
                 {/* Sign Up Button */}
                 <button
-                  onClick={handleSignUp}
+                  onClick={onLogin} // For demo, both login and sign up do the same
                   className="px-3 py-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 text-sm font-medium text-blue-400 hover:from-blue-500/30 hover:to-cyan-500/30 hover:text-blue-300 hover:border-blue-400/50 transition-colors whitespace-nowrap"
                 >
                   Sign Up
