@@ -1,8 +1,5 @@
-// src/components/Layout/Header.tsx
 import { useState } from 'react';
-import { Menu, Bell, User } from 'lucide-react';
-import { DropdownMenu } from '../UI/DropdownMenu';
-import { NotificationsDropdown } from '../UI/NotificationsDropdown';
+import { Menu, Bell, X } from 'lucide-react';
 
 interface HeaderProps {
   isLoggedIn: boolean;
@@ -11,92 +8,105 @@ interface HeaderProps {
 }
 
 export const Header = ({ isLoggedIn, onLogin, onLogout }: HeaderProps) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-4 py-3 sm:px-6 sm:py-4">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between">
-          {/* Left side - Brand/Logo */}
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 flex items-center justify-center">
-              <span className="text-sm font-bold text-blue-400">AI</span>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-gray-950/90 backdrop-blur-lg border-b border-gray-800/50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <div className="flex items-center">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                <span className="text-sm font-bold text-white">AI</span>
+              </div>
+              <span className="text-lg font-bold text-white hidden sm:inline">VisionCraft</span>
             </div>
-            <span className="text-sm font-medium text-gray-300 hidden sm:block">Chat Assistant</span>
           </div>
 
-          {/* Right side - Conditional rendering based on login state */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <a href="#features" className="text-gray-300 hover:text-white transition-colors">
+              Features
+            </a>
+            <a href="#how-it-works" className="text-gray-300 hover:text-white transition-colors">
+              How It Works
+            </a>
+            <a href="#pricing" className="text-gray-300 hover:text-white transition-colors">
+              Pricing
+            </a>
+          </nav>
+
+          {/* Right side - Auth buttons */}
+          <div className="flex items-center gap-4">
             {isLoggedIn ? (
-              // Logged in state: Hamburger, Notification bell, and Profile
               <>
-                {/* Hamburger Menu */}
-                <div className="relative">
-                  <button
-                    onClick={() => {
-                      setIsMenuOpen(!isMenuOpen);
-                      if (isNotificationsOpen) setIsNotificationsOpen(false);
-                    }}
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gray-800/50 border border-gray-700/50 flex items-center justify-center hover:bg-gray-800 transition-colors group"
-                  >
-                    <Menu className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 group-hover:text-gray-300 transition-colors" />
-                  </button>
-                  
-                  {/* Dropdown Menu */}
-                  <DropdownMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
-                </div>
-
-                {/* Notification Bell */}
-                <div className="relative">
-                  <button
-                    onClick={() => {
-                      setIsNotificationsOpen(!isNotificationsOpen);
-                      if (isMenuOpen) setIsMenuOpen(false);
-                    }}
-                    className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gray-800/50 border border-gray-700/50 flex items-center justify-center hover:bg-gray-800 transition-colors group"
-                  >
-                    <Bell className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 group-hover:text-gray-300 transition-colors" />
-                  </button>
-                  
-                  {/* Notifications Dropdown */}
-                  <NotificationsDropdown 
-                    isOpen={isNotificationsOpen} 
-                    onClose={() => setIsNotificationsOpen(false)} 
-                  />
-                </div>
-
-                {/* Profile Icon with logout functionality */}
+                <button className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors">
+                  <Bell className="w-4 h-4" />
+                  <span>Notifications</span>
+                </button>
                 <button
                   onClick={onLogout}
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 flex items-center justify-center hover:border-gray-600 transition-colors group"
-                  title="Logout"
+                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 hover:opacity-90 transition-opacity"
                 >
-                  <User className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 group-hover:text-gray-300" />
+                  Dashboard
                 </button>
               </>
             ) : (
-              // Not logged in state: Login and Sign Up text buttons
               <>
-                {/* Login Button */}
                 <button
                   onClick={onLogin}
-                  className="px-3 py-2 rounded-xl bg-gray-800/50 border border-gray-700/50 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-colors whitespace-nowrap"
+                  className="hidden md:block px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-colors"
                 >
-                  Login
+                  Sign In
                 </button>
-
-                {/* Sign Up Button */}
                 <button
-                  onClick={onLogin} // For demo, both login and sign up do the same
-                  className="px-3 py-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 text-sm font-medium text-blue-400 hover:from-blue-500/30 hover:to-cyan-500/30 hover:text-blue-300 hover:border-blue-400/50 transition-colors whitespace-nowrap"
+                  onClick={onLogin}
+                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 hover:opacity-90 transition-opacity"
                 >
-                  Sign Up
+                  Get Started Free
                 </button>
               </>
             )}
+
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 rounded-lg hover:bg-gray-800 transition-colors"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden border-t border-gray-800 py-4">
+            <div className="flex flex-col space-y-4">
+              <a href="#features" className="text-gray-300 hover:text-white transition-colors">
+                Features
+              </a>
+              <a href="#how-it-works" className="text-gray-300 hover:text-white transition-colors">
+                How It Works
+              </a>
+              <a href="#pricing" className="text-gray-300 hover:text-white transition-colors">
+                Pricing
+              </a>
+              {!isLoggedIn && (
+                <button
+                  onClick={onLogin}
+                  className="text-left text-gray-300 hover:text-white transition-colors"
+                >
+                  Sign In
+                </button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );
