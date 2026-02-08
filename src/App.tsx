@@ -4,9 +4,11 @@ import { HeroSection } from './components/Landing/HeroSection';
 import { FeaturesSection } from './components/Landing/FeaturesSection';
 import { HowItWorksSection } from './components/Landing/HowItWorksSection';
 import { Footer } from './components/Landing/Footer';
+import { useChat } from './hooks/useChat';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { chatState, sendMessage, updateInput } = useChat();
 
   // For demo purposes
   const handleLogin = () => setIsLoggedIn(true);
@@ -40,10 +42,10 @@ function App() {
 
   // Landing Page State
   return (
-    <div className="min-h-screen bg-gray-950 text-white overflow-x-hidden">
+    <div className="min-h-screen bg-gray-950 text-white">
       <Header isLoggedIn={isLoggedIn} onLogin={handleLogin} />
-      <main>
-        <HeroSection onTryNow={handleLogin} />
+      <main className="pt-16"> {/* Add padding-top for fixed header */}
+        <HeroSection onTryNow={handleLogin} inputValue={chatState.input} onInputChange={updateInput} onInputSend={sendMessage} />
         <FeaturesSection />
         <HowItWorksSection />
         <Footer />
