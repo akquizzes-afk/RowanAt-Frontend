@@ -42,14 +42,18 @@ function App() {
 
   // Landing Page State
   return (
-    <div className="min-h-screen bg-gray-950 text-white">
+    <div className="min-h-screen bg-gray-950 text-white overflow-x-hidden">
       <Header isLoggedIn={isLoggedIn} onLogin={handleLogin} />
-      <main className="pt-16"> {/* Add padding-top for fixed header */}
-        <HeroSection onTryNow={handleLogin} inputValue={chatState.input} onInputChange={updateInput} onInputSend={sendMessage} />
-        <FeaturesSection />
-        <HowItWorksSection />
-        <Footer />
-      </main>
+      
+      {/* Main content that should scroll */}
+      <div className="flex flex-col min-h-screen">
+        <main className="flex-grow pt-16"> {/* flex-grow makes this take available space */}
+          <HeroSection onTryNow={handleLogin} inputValue={chatState.input} onInputChange={updateInput} onInputSend={sendMessage} />
+          <FeaturesSection />
+          <HowItWorksSection />
+        </main>
+        <Footer /> {/* Footer stays at bottom */}
+      </div>
     </div>
   );
 }

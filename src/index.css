@@ -2,19 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Base Styles */
+/* ===== BASE STYLES ===== */
 @layer base {
+  :root {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+  }
+
   * {
     @apply border-gray-800;
   }
-  
+
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
   body {
     @apply bg-gray-950 text-white antialiased;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Smooth textarea resize */
+  textarea {
+    transition: height 0.2s ease;
   }
 }
 
-/* Custom Utilities */
+/* ===== CUSTOM UTILITIES ===== */
 @layer utilities {
   /* Hide scrollbar but keep functionality */
   .no-scrollbar::-webkit-scrollbar {
@@ -25,39 +44,30 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
-  /* Custom pulse for horizon flash */
+
+  /* Glass effect */
+  .glass {
+    @apply backdrop-blur-xl bg-white/5 border border-white/10;
+  }
+
+  /* Text gradient */
+  .text-gradient {
+    @apply bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent;
+  }
+
+  /* Custom pulse animations */
   .animate-pulse-slow {
     animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
-}
 
-/* Animations */
-@keyframes twinkle {
-  0%, 100% {
-    opacity: 0.2;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.1);
+  .animate-border-spin {
+    animation: border-spin 3s linear infinite;
   }
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* ===== KEYFRAME ANIMATIONS ===== */
 
-/* CRITICAL MISSING ANIMATIONS: */
-
-/* 1. Pulse animation - Used in HorizonEffect.tsx */
+/* Pulse Animation - For horizon flash */
 @keyframes pulse {
   0%, 100% {
     opacity: 0.5;
@@ -67,7 +77,7 @@
   }
 }
 
-/* 2. Ping animation - Used in HorizonEffect.tsx */
+/* Ping Animation - For horizon glow */
 @keyframes ping {
   75%, 100% {
     transform: scale(2);
@@ -79,7 +89,7 @@
   animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
-/* 3. Bounce animation - Used in HeroSection.tsx (scroll indicator) */
+/* Bounce Animation - For scroll indicator */
 @keyframes bounce {
   0%, 100% {
     transform: translateY(-25%);
@@ -95,7 +105,39 @@
   animation: bounce 1s infinite;
 }
 
-/* 4. Cursor blink - For AnimatedText.tsx (if you're using it) */
+/* Twinkle Animation - For stars */
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.animate-twinkle {
+  animation: twinkle var(--duration) infinite ease-in-out;
+}
+
+/* Fade In Up Animation - For section transitions */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Cursor Blink Animation - For animated text */
 @keyframes cursor-blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
@@ -105,7 +147,7 @@
   animation: cursor-blink 1s infinite;
 }
 
-/* 5. Typewriter effect - For AnimatedText.tsx */
+/* Typewriter Animation - For animated text */
 @keyframes typewriter {
   from { width: 0; }
   to { width: 100%; }
@@ -115,12 +157,84 @@
   animation: typewriter 2s steps(40) 1s 1 normal both;
 }
 
-/* Smooth Scrolling */
-html {
-  scroll-behavior: smooth;
+/* === INPUT AREA SPECIFIC ANIMATIONS === */
+
+/* Border Spin Animation - For InputArea gradient */
+@keyframes border-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* Custom Scrollbar */
+.animate-spin-slow {
+  animation: border-spin 4s linear infinite;
+}
+
+/* Normal Spin Animation - For loading spinner */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Input Border Animations - For AnimatedBorder component */
+@keyframes moveHorizontal {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes moveHorizontalReverse {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes moveVertical {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes moveVerticalReverse {
+  0% { transform: translateY(100%); }
+  100% { transform: translateY(-100%); }
+}
+
+.animate-move-horizontal {
+  animation: moveHorizontal 3s linear infinite;
+}
+
+.animate-move-horizontal-reverse {
+  animation: moveHorizontalReverse 3s linear infinite;
+}
+
+.animate-move-vertical {
+  animation: moveVertical 3s linear infinite;
+}
+
+.animate-move-vertical-reverse {
+  animation: moveVerticalReverse 3s linear infinite;
+}
+
+/* Slide In Animation - For dropdowns */
+@keyframes slideInFromTop {
+  0% { transform: translateY(-10px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.slide-in-from-top-5 {
+  animation: slideInFromTop 0.2s ease-out;
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -135,4 +249,46 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-600;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+/* ===== GLOBAL TRANSITIONS ===== */
+* {
+  transition: background-color 0.2s ease, 
+              border-color 0.2s ease, 
+              transform 0.2s ease,
+              opacity 0.2s ease;
+}
+
+/* ===== SMOOTH SCROLLING ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ===== RESPONSIVE HELPERS ===== */
+@layer components {
+  /* Container for consistent padding */
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Card styles */
+  .glass-card {
+    @apply bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl;
+  }
+  
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent;
+  }
 }

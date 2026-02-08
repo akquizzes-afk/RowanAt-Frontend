@@ -11,7 +11,7 @@ interface HeroSectionProps {
 
 export const HeroSection = ({ onTryNow, inputValue, onInputChange, onInputSend }: HeroSectionProps) => {
   return (
-    <section className="relative py-12 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="relative min-h-[90vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         {/* Gradient orbs */}
@@ -32,8 +32,8 @@ export const HeroSection = ({ onTryNow, inputValue, onInputChange, onInputSend }
       {/* Horizon Effect */}
       <HorizonEffect />
 
-      {/* Content */}
-      <div className="relative z-10 max-w-6xl mx-auto text-center">
+      {/* Content Container */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto text-center py-8 md:py-12">
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6 md:mb-8">
           <span className="text-xs md:text-sm font-medium text-blue-400">AI-Powered Web Design</span>
