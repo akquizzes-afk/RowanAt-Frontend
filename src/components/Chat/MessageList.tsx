@@ -1,47 +1,68 @@
+// src/components/Chat/MessageList.tsx
 import { useRef, useEffect } from 'react';
-import { Message } from '../../types';
-import { MessageBubble } from './MessageBubble';
+import { User, Bot } from 'lucide-react';
+
+interface Message {
+  id: string;
+  text: string;
+  sender: 'user' | 'assistant';
+}
 
 interface MessageListProps {
   messages: Message[];
 }
 
 export const MessageList = ({ messages }: MessageListProps) => {
-  const endRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Auto-scroll to bottom when messages change
   useEffect(() => {
-    const scrollToBottom = () => {
-      if (endRef.current) {
-        endRef.current.scrollIntoView({ behavior: 'smooth' });
-      }
-    };
-
-    const timeoutId = setTimeout(scrollToBottom, 100);
-    return () => clearTimeout(timeoutId);
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  if (messages.length === 0) {
+    return null;
+  }
+
   return (
-    <div 
-      ref={containerRef}
-      className="flex-1 overflow-y-auto px-4 py-20 md:px-8 scroll-smooth"
-      style={{ scrollBehavior: 'smooth' }}
-    >
-      <div className="max-w-3xl mx-auto pb-8">
-        {messages.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="text-gray-500 mb-4 text-sm">Conversation will appear here</div>
-            <div className="text-xs text-gray-600">
-              Start by describing your website idea below
+    <div className="flex-1 overflow-y-auto p-4 space-y-6 max-w-4xl mx-auto">
+      {messages.map((message) => (
+        <div
+          key={message.id}
+          className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+        >
+          <div
+            className={`max-w-[80%] md:max-w-[70%] flex gap-3 ${
+              message.sender === 'user' ? 'flex-row-reverse' : 'flex-row'
+            }`}
+          >
+            {/* Avatar */}
+            <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+              message.sender === 'user' 
+                ? 'bg-gradient-to-br from-blue-500 to-cyan-500' 
+                : 'bg-gradient-to-br from-gray-800 to-gray-900'
+            }`}>
+              {message.sender === 'user' ? (
+                <User className="w-4 h-4 text-white" />
+              ) : (
+                <Bot className="w-4 h-4 text-white" />
+              )}
+            </div>
+
+            {/* Message Bubble */}
+            <div
+              className={`rounded-2xl p-4 ${
+                message.sender === 'user'
+                  ? 'bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30 rounded-br-none'
+                  : 'bg-gray-800/50 border border-gray-700/50 rounded-bl-none'
+              }`}
+            >
+              <p className="text-gray-100 whitespace-pre-wrap">{message.text}</p>
             </div>
           </div>
-        ) : (
-          messages.map((message) => (
-            <MessageBubble key={message.id} message={message} />
-          ))
-        )}
-        <div ref={endRef} className="h-px" />
-      </div>
+        </div>
+      ))}
+      <div ref={messagesEndRef} />
     </div>
   );
 };
